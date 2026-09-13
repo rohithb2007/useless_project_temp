@@ -1,0 +1,183 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="day"] {
+  --app-bg: #F7F4EE;
+  --app-surface: #FFFDF8;
+  --app-surface-secondary: #F1E9DC;
+  --app-text: #2E1C14;
+  --app-text-secondary: #5C4638;
+  --app-border: #6B4327;
+  --app-accent: #D99A00;
+
+  --bg: var(--app-bg);
+  --surface: var(--app-surface);
+  --surface-secondary: var(--app-surface-secondary);
+  --text: var(--app-text);
+  --text-secondary: var(--app-text-secondary);
+  --border: var(--app-border);
+  --accent: var(--app-accent);
+  color-scheme: light;
+}
+
+[data-theme="night"] {
+  --app-bg: #120B07;
+  --app-surface: #1A0F0A;
+  --app-surface-secondary: #24140D;
+  --app-text: #FFF4E6;
+  --app-text-secondary: #D8C1AC;
+  --app-border: #6B4327;
+  --app-accent: #D99A00;
+
+  --bg: var(--app-bg);
+  --surface: var(--app-surface);
+  --surface-secondary: var(--app-surface-secondary);
+  --text: var(--app-text);
+  --text-secondary: var(--app-text-secondary);
+  --border: var(--app-border);
+  --accent: var(--app-accent);
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: var(--app-bg);
+  color: var(--app-text);
+  font-family: 'VT323', 'JetBrains Mono', monospace;
+  image-rendering: pixelated;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--app-bg);
+}
+
+h1, h2, h3, .font-heading {
+  font-family: 'Press Start 2P', 'Chakra Petch', sans-serif;
+}
+
+.font-pixel {
+  font-family: 'Press Start 2P', monospace;
+}
+
+.font-vt323 {
+  font-family: 'VT323', monospace;
+}
+
+/* 8-Bit Pixelated Box - Theme Aware */
+.pixel-box {
+  background-color: var(--app-surface);
+  color: var(--app-text);
+  border: 4px solid var(--app-border);
+  box-shadow: 
+    -4px 0 0 0 var(--app-text),
+     4px 0 0 0 var(--app-text),
+     0 -4px 0 0 var(--app-text),
+     0  4px 0 0 var(--app-text),
+     inset -4px -4px 0 0 var(--app-surface-secondary),
+     inset 4px 4px 0 0 var(--app-surface);
+}
+
+/* 8-bit Pixel Button */
+.pixel-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.75rem;
+  padding: 0.85rem 1.25rem;
+  background-color: var(--app-accent);
+  color: #2E1C14;
+  border: 3px solid var(--app-text);
+  box-shadow: inset -3px -3px 0 0 #B37E00, inset 3px 3px 0 0 #FFD25A, 0 4px 0 0 var(--app-text);
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+.pixel-btn:hover {
+  background-color: #C28900;
+  transform: translateY(-2px);
+  box-shadow: inset -3px -3px 0 0 #8C6300, inset 3px 3px 0 0 #FFE08C, 0 6px 0 0 var(--app-text);
+}
+
+.pixel-btn:active {
+  transform: translateY(2px);
+  box-shadow: inset -3px -3px 0 0 #B37E00, inset 3px 3px 0 0 #FFD25A, 0 2px 0 0 var(--app-text);
+}
+
+.pixel-btn-secondary {
+  background-color: var(--app-border);
+  color: #FFF4E6;
+  border: 3px solid var(--app-text);
+  box-shadow: inset -3px -3px 0 0 #4A2A18, inset 3px 3px 0 0 #8A5A32, 0 4px 0 0 var(--app-text);
+}
+
+.pixel-btn-secondary:hover {
+  background-color: #54341E;
+}
+
+/* Custom Scanlines Effect - FIXED position to avoid viewport scroll cutoff */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0) 50%, 
+    rgba(0, 0, 0, 0.04) 50%
+  );
+  z-index: 20;
+  background-size: 100% 4px;
+  pointer-events: none;
+}
+
+/* Pixel Bounce Animation */
+@keyframes pixelBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.animate-pixel-bounce {
+  animation: pixelBounce 0.8s steps(2, jump-none) infinite;
+}
+
+/* Scan bar vertical movement */
+@keyframes scanVertical {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    top: 95%;
+    opacity: 1;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.8;
+  }
+}
+
+.animate-scan-vertical {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #D99A00;
+  box-shadow: 0 0 10px #D99A00;
+  animation: scanVertical 2s steps(20) infinite;
+}
