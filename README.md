@@ -1,139 +1,200 @@
-# KALLA CHIRI — Chiri Forensics Department 🎯
+# KALLA CHIRI
 
-> **"Technically serious. Completely useless."**
+## Basic Details
 
-![Kalla Chiri Banner](https://img.shields.io/badge/Chiri_Forensics-Online-10b981?style=for-the-badge&logo=target)
-![Static Badge](https://img.shields.io/badge/TinkerHub-Useless_Projects_3.0-06b6d4?style=for-the-badge)
+### Team Name: SOCIUS
 
-A mobile-first web app that humorously investigates whether a person's smile is a **"Kalla Chiri"** (a fake, forced corporate smile) or a **"Real Chiri"** (an authentic smile).
+### Team Members
 
----
+- Team Lead: Sneha Prakasan - Mar Athanasius College of Engineering, Kothamangalam
+- Member 2: Rohith B - Mar Athanasius College of Engineering, Kothamangalam
 
-## 💡 Concept & Philosophy
+### Project Description
 
-In corporate meetings, family functions, and college photos, millions of fake smiles ("Kalla Chiri") are generated daily. The **Chiri Forensics Department** solves a completely nonexistent problem by deploying computer vision telemetry and generative AI to audit suspect smiles in real time.
+KALLA CHIRI is a browser-based computer vision project that determines whether a person's smile is a "Kalla Chiri" (fake smile) or a "Nalla Chiri" (natural smile).
 
-**Key Rule**: This is an entertainment and experimental project. Facial landmark measurements quantify observable movement, but the system **does NOT claim to scientifically determine whether someone is genuinely happy, lying, or emotionally authentic.**
+Using facial landmarks, the system measures mouth and eye movements for a few seconds and generates a completely unnecessary but entertaining forensic verdict.
 
----
+### The Problem (that doesn't exist)
 
-## 🏗️ Architecture & LLM Positioning
+People smile all the time, but nobody has ever properly investigated whether that smile is genuine.
 
+The completely imaginary problem is:
+
+**"How do we know if someone's smile is actually real?"**
+
+Important meetings, awkward photos, forced social interactions and suspicious-looking smiles have created a crisis that absolutely nobody asked us to solve.
+
+### The Solution (that nobody asked for)
+
+KALLA CHIRI uses the device camera and MediaPipe Face Landmarker to track facial movements.
+
+The system:
+
+1. Detects the user's face.
+2. Tracks selected facial landmarks.
+3. Measures mouth expansion and eye movement.
+4. Runs a 3-second facial scan.
+5. Calculates a humorous Kalla Chiri score.
+6. Classifies the expression as `NEUTRAL`, `NALLA_CHIRI`, or `KALLA_CHIRI`.
+7. Optionally uses Gemini AI to generate a Malayalam/Manglish-style forensic report.
+
+Because apparently, smiling needed forensic investigation.
+
+## Technical Details
+
+### Technologies/Components Used
+
+#### For Software:
+
+- Languages used: TypeScript, JavaScript,HTML,CSS
+- Frameworks used: React 19, Vite 6
+- Libraries used:
+  - MediaPipe Tasks Vision
+  - Google Gemini API
+  - Lucide React
+  - Tailwind CSS
+  - Canvas Confetti
+- Tools used:
+  - Git
+  - GitHub
+  - Vercel
+  - VS Code
+  - Browser Camera API
+
+#### For Hardware:
+
+No additional hardware is required.
+
+The project uses the camera available on a laptop, desktop, or mobile device.
+
+### Implementation
+
+#### For Software:
+
+The application follows a client-side computer vision pipeline:
+
+```text
+Camera
+   |
+   v
+HTML Video
+   |
+   v
+MediaPipe Face Landmarker
+   |
+   v
+Facial Landmark Detection
+   |
+   v
+Mouth + Eye Movement Analysis
+   |
+   v
+3-Second Scan
+   |
+   v
+Heuristic Score
+   |
+   +-------------------+
+   |                   |
+   v                   v
+NEUTRAL          Smile Detected
+                       |
+                       v
+              NALLA_CHIRI / KALLA_CHIRI
+                       |
+                       v
+                 Gemini AI Report
 ```
-Phone Camera 
-    ↓
-HTML <video> Stream
-    ↓
-MediaPipe Face Landmarker (Client-side WASM)
-    ↓
-Euclidean Facial Landmark Measurements
-    ↓
-3-Second Temporal Scan Engine (Ref-buffered)
-    ↓
-Kalla Chiri Mathematical Heuristic Score (0-100)
-    ↓
-Structured Numerical JSON Payload
-    ↓
-Gemini AI (Chiri Forensics Reasoning Engine)
-    ↓
-Dramatic Malayalam / Manglish Forensic Report Card
-```
 
-### 🧠 Why This Architecture?
-- **We DO NOT send camera frames or raw video to Gemini.** Computer vision does the measurable work locally.
-- **MediaPipe** extracts 478 3D facial landmarks in the browser at ~60 FPS.
-- **Our deterministic algorithm** converts facial deltas into structured numerical telemetry (mouth expansion %, eye squint aperture %, smile symmetry).
-- **Gemini AI** receives *only* that structured numerical telemetry and acts purely as the dramatic forensic reasoning and report-generation layer.
+The system measures selected facial landmarks to estimate:
 
----
+- Mouth expansion
+- Left-eye squint
+- Right-eye squint
+- Smile symmetry
+- Overall heuristic score
 
-## ⚡ Tech Stack
+The facial analysis is performed locally in the browser.
 
-- **Framework**: React 19 + Vite 6 + TypeScript
-- **Styling**: Tailwind CSS v4 + Custom Cyberpunk CSS
-- **Vision Model**: `@mediapipe/tasks-vision` (Face Landmarker WASM)
-- **AI Engine**: `@google/genai` (Google Gen AI SDK with Structured Output JSON Mode)
-- **UI Components & Effects**: Lucide React + Canvas Confetti
-- **Infrastructure**: Zero Backend, Zero Database, 100% Client-side Browser Execution
+# Installation
 
----
+Clone the repository and install the required dependencies:
 
-## 🔬 Mathematical Telemetry & Heuristic Scoring
-
-### 1. Key Landmarks Extracted
-- **Left Eye**: Upper (159) to Lower (145) aperture.
-- **Right Eye**: Upper (386) to Lower (374) aperture.
-- **Mouth Width**: Left Corner (61) to Right Corner (291).
-
-### 2. Formulas
-$$\text{Distance}(A, B) = \sqrt{(B.x - A.x)^2 + (B.y - A.y)^2}$$
-
-$$\text{MouthExpansion}\% = \left( \frac{\text{PeakMouthWidth} - \text{BaselineMouthWidth}}{\text{BaselineMouthWidth}} \right) \times 100$$
-
-$$\text{EyeSquint}\% = \left( \frac{\text{BaselineEyeAperture} - \text{PeakEyeAperture}}{\text{BaselineEyeAperture}} \right) \times 100$$
-
-### 3. Classification
-- **`NEUTRAL_FACE`**: Mouth expansion $< 6.0\%$
-- **`REAL_CHIRI`**: High mouth expansion accompanied by proportional eye squint (Duchenne marker). Heuristic Score $0-30$.
-- **`UNCERTAIN`**: Conflicting landmark deltas. Heuristic Score $31-59$.
-- **`KALLA_CHIRI`**: High mouth expansion with low or zero eye squint (dead eyes / corporate smile). Heuristic Score $60-100$.
-
----
-
-## 🔒 Privacy & Security
-
-- **Local Execution**: All camera streams are processed locally in your browser using MediaPipe WASM.
-- **No Video Uploads**: Camera frames are never recorded, saved, or transmitted to any server.
-- **Data Minimization**: Only 5 numbers (e.g. `mouth_expansion_percent: 34.4`) are sent to Gemini.
-- *Note for Production*: In a hackathon MVP, the client-side API key is stored in `.env`. For a production deployment, Gemini API calls should be proxied through a lightweight backend API route.
-
----
-
-## 🚀 Setup & Installation
-
-### Prerequisites
-- Node.js (v18+ recommended)
-- Web Browser with Camera Access (Chrome / Safari / Firefox)
-
-### 1. Clone & Install
 ```bash
-cd useless_project_temp
+git clone <YOUR_GITHUB_REPOSITORY_URL>
+cd <PROJECT_FOLDER>
 npm install
 ```
 
-### 2. Configure Environment Variables
-Copy `.env.example` to `.env`:
-```bash
-cp .env.example .env
-```
-Edit `.env` and insert your Gemini API Key:
-```env
-VITE_GEMINI_API_KEY=your_gemini_api_key_here
-```
-*(If left empty, the app will automatically use the built-in local Malayalam forensic fallback engine!)*
+Create a `.env` file in the project root:
 
-### 3. Run Development Server
+```env
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
+
+# Run
+
+Start the development server:
+
 ```bash
 npm run dev
 ```
-Open `http://localhost:3000` on your mobile phone or desktop browser.
 
-### 4. Build for Production
+Open the local URL shown in the terminal.
+
+For a production build:
+
 ```bash
 npm run build
 ```
 
----
+The production files will be generated in the `dist` folder.
 
-## 🎭 Live Demo Script (30-Second Walkthrough)
+### Project Documentation
 
-1. **Step 1**: Open the app and view the cyberpunk **Chiri Forensics Dept.** landing screen.
-2. **Step 2**: Click **"INITIALIZE SCANNER"**. Grant camera permission.
-3. **Step 3**: Align suspect's face inside the green reticle box. Note the live telemetry stats.
-4. **Step 4**: Click **"RECORD 3 SECONDS"** and ask the suspect to smile.
-5. **Step 5**: Watch the dramatic terminal log analysis (`MEASURING OCULAR APERTURE...`).
-6. **Step 6**: Read the final **🚨 KALLA CHIRI DETECTED 🚨** report card & Gemini Malayalam roast!
+# Screenshots (Add at least 3)
 
----
+![Screenshot1]
+<img width="1891" height="912" alt="Screenshot 2026-09-13 171008" src="https://github.com/user-attachments/assets/bd590370-33c1-444d-b685-8582993c0ede" />
 
-Made with ❤️ at **TinkerHub Useless Projects 3.0**
+*Home screen showing the KALLA CHIRI interface and scanner.*
+
+![Screenshot2]
+<img width="1892" height="908" alt="Screenshot 2026-09-13 173252" src="https://github.com/user-attachments/assets/40eff16c-e284-4554-a603-8fe755df7de4" />
+
+*Face scanning screen showing the 3-second facial analysis process.*
+
+![Screenshot3]
+<img width="742" height="907" alt="Screenshot 2026-09-13 173334" src="https://github.com/user-attachments/assets/2c0f6949-70bc-4b0e-b0a2-d50644cf8242" />
+
+
+*Final forensic result showing the KALLA CHIRI/NALLA CHIRI verdict and score.*
+
+> Replace the image paths above with your actual screenshot filenames.
+
+
+*Workflow showing the complete process from camera input to facial landmark analysis, scoring, and final verdict.*
+
+> Replace the image path with your actual workflow/architecture diagram.
+
+### Project Demo
+
+# Video
+
+**Demo Video:** https://drive.google.com/file/d/1joYf6E-5a0DUvPxgkDYeUVyKM68k7PKu/view?usp=sharing
+*The demo demonstrates camera initialization, facial landmark detection, the 3-second smile scan, heuristic scoring, and the final forensic verdict.*
+
+# Additional Demos
+
+- **Live Demo:** (https://useless-project-temp-three-plum.vercel.app/)
+- **GitHub Repository:** (https://github.com/rohithb2007/useless_project_temp)
+
+
+## Team Contributions
+
+- **Sneha Prakasan:** Project concept and idea development, frontend development, UI/UX design, integration of the scanning interface, project documentation, README preparation, and overall project coordination.
+
+- **Rohith B:** MediaPipe Face Landmarker integration, facial landmark tracking, mouth and eye movement calculations, Kalla Chiri heuristic logic, Gemini AI integration, testing, and technical implementation.
+
+Together, the team developed the concept, implemented the computer vision pipeline, designed the user experience, and prepared the project for demonstration.
